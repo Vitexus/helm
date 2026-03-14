@@ -1,0 +1,29 @@
+Source: helm
+Section: devel
+Priority: optional
+Maintainer: Vítězslav Dvořák <info@vitexsoftware.cz>
+Build-Depends:
+ debhelper-compat (= 13),
+ golang-go (>= 2:1.23~),
+Standards-Version: 4.7.0
+Homepage: https://helm.sh
+Rules-Requires-Root: no
+Vcs-Git: https://github.com/Vitexus/helm.git
+Vcs-Browser: https://github.com/Vitexus/helm
+
+Package: helm
+Architecture: any
+Multi-Arch: foreign
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Description: Kubernetes package manager
+ Helm is a tool for managing Kubernetes charts. Charts are packages of
+ pre-configured Kubernetes resources.
+ .
+ Use Helm to:
+  - Find and use popular software packaged as Helm charts to run in Kubernetes
+  - Share your own applications as Helm charts
+  - Create reproducible builds of your Kubernetes applications
+  - Intelligently manage your Kubernetes manifest files
+  - Manage releases of Helm packages

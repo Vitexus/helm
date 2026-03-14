@@ -1,0 +1,29 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+export GOFLAGS = -trimpath
+export CGO_ENABLED = 0
+
+GIT_COMMIT = $(shell git rev-parse HEAD 2>/dev/null || echo unknown)
+GIT_DIRTY = $(shell test -n "`git status --porcelain 2>/dev/null`" && echo dirty || echo clean)
+VERSION = $(shell dpkg-parsechangelog --show-field Version | sed 's/-.*//')
+LDFLAGS = -w -s \
+  -X helm.sh/helm/v4/internal/version.version=v$(VERSION) \
+  -X helm.sh/helm/v4/internal/version.metadata= \
+  -X helm.sh/helm/v4/internal/version.gitCommit=$(GIT_COMMIT) \
+  -X helm.sh/helm/v4/internal/version.gitTreeState=$(GIT_DIRTY)
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	go build $(GOFLAGS) -ldflags '$(LDFLAGS)' -o bin/helm ./cmd/helm
+
+override_dh_auto_test:
+
+override_dh_auto_install:
+	install -D -m 0755 bin/helm debian/helm/usr/bin/helm
+
+override_dh_dwz:
+
+override_dh_strip:

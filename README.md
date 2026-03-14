@@ -51,6 +51,24 @@ If you want to use a package manager:
 - [Flox](https://flox.dev) users can use `flox install kubernetes-helm`.
 - [Mise-en-place](https://mise.jdx.dev/) users can use `mise use -g helm@latest`
 
+### Debian / Ubuntu package
+
+This repository includes Debian packaging. To build the `.deb` package from source:
+
+```bash
+apt-get install debhelper golang-go
+dpkg-buildpackage -us -uc -b
+```
+
+Or use the provided `debian/Jenkinsfile.release` for automated builds via Jenkins,
+which publishes packages to the [MultiFlexi apt repository](https://repo.multiflexi.eu).
+
+Once installed via the apt repository:
+
+```bash
+apt-get install helm
+```
+
 To rapidly get Helm up and running, start with the [Quick Start Guide](https://helm.sh/docs/intro/quickstart/).
 
 See the [installation guide](https://helm.sh/docs/intro/install/) for more options,

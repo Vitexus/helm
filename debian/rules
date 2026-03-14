@@ -3,6 +3,10 @@
 export DH_VERBOSE = 1
 export GOFLAGS = -trimpath
 export CGO_ENABLED = 0
+export GOTOOLCHAIN = auto
+export GOPATH = $(CURDIR)/debian/.go-path
+export GOMODCACHE = $(CURDIR)/debian/.go-mod-cache
+export GOCACHE = $(CURDIR)/debian/.go-cache
 
 GIT_COMMIT = $(shell git rev-parse HEAD 2>/dev/null || echo unknown)
 GIT_DIRTY = $(shell test -n "`git status --porcelain 2>/dev/null`" && echo dirty || echo clean)
@@ -27,3 +31,8 @@ override_dh_auto_install:
 override_dh_dwz:
 
 override_dh_strip:
+
+override_dh_clean:
+	-chmod -R u+w debian/.go-mod-cache/ 2>/dev/null || true
+	-chmod -R u+w debian/.go-cache/ 2>/dev/null || true
+	dh_clean

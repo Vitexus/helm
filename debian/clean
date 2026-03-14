@@ -1,1 +1,4 @@
 bin/
+debian/.go-path/
+debian/.go-mod-cache/
+debian/.go-cache/
